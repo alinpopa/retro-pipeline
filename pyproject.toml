@@ -1,0 +1,49 @@
+[project]
+name = "retro-pipeline"
+version = "0.1.0"
+description = "In silico de novo protein engineering pipeline for enhanced pioneer transcription factors (RetroSOX / RetroKLF clone)."
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{ name = "retro_pipeline contributors" }]
+license = { text = "MIT" }
+
+dependencies = [
+    "biopython>=1.83",
+    "pyyaml>=6.0",
+    "numpy>=1.26",
+    "pandas>=2.1",
+    "requests>=2.31",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "ruff>=0.5",
+]
+viz = [
+    "matplotlib>=3.8",
+    "seaborn>=0.13",
+    "plotly>=5.18",
+    "py3Dmol>=2.2",
+    "jupyter>=1.0",
+    "nbformat>=5.9",
+]
+
+[project.scripts]
+retro-rfdiffusion   = "scripts.run_rfdiffusion:main"
+retro-proteinmpnn   = "scripts.run_proteinmpnn:main"
+retro-protenix      = "scripts.run_protenix:main"
+retro-foldx-filter  = "scripts.run_foldx_filter:main"
+retro-score-rank    = "scripts.score_and_rank:main"
+retro-visualize     = "scripts.visualize:main"
+
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["scripts"]
+
+[tool.ruff]
+line-length = 110
+target-version = "py310"

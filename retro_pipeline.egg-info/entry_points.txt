@@ -1,0 +1,7 @@
+[console_scripts]
+retro-foldx-filter = scripts.run_foldx_filter:main
+retro-proteinmpnn = scripts.run_proteinmpnn:main
+retro-protenix = scripts.run_protenix:main
+retro-rfdiffusion = scripts.run_rfdiffusion:main
+retro-score-rank = scripts.score_and_rank:main
+retro-visualize = scripts.visualize:main

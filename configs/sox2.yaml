@@ -1,0 +1,48 @@
+# SOX2 partial-diffusion design config.
+#
+# Template: PDB 6T7B (Dodonova et al. 2020) — SOX2 HMG-box bound to a
+# nucleosome. The HMG-box domain (the DNA-contacting region) is held
+# fixed; everything outside of it is hallucinated by RFdiffusion.
+#
+# All residue numbering is 1-indexed and refers to the *author* numbering
+# in the template PDB.
+
+name: sox2
+
+template_pdb: templates/6T7B.pdb
+protein_chain: K
+protein_length: 317           # full SOX2 length; matches contig total for partial diffusion
+
+# DNA-binding motif (HMG box). Coordinates locked in 3D space; sequence
+# also fixed in ProteinMPNN via make_fixed_positions_dict.
+# 6T7B resolves SOX2 on chain K, residues 39-114 (76 aa).
+motif:
+  chain: K
+  ranges:
+    - [39, 114]               # HMG box as resolved in 6T7B
+
+# Target DNA: SOX2 consensus motif. The pipeline auto-builds the reverse
+# complement strand for the Protenix dsDNA job.
+dna_target: "CTTTGTTCT"
+
+# RFdiffusion noise schedule. 35-45 enforces the ~30% mutation space the
+# spec calls for; 40 is the default sweet spot.
+partial_T: 40
+num_backbones: 10000
+
+# ProteinMPNN: 50 sequences per backbone at low temperature for structural
+# rigidity (per spec).
+mpnn_seqs_per_backbone: 50
+mpnn_temp: 0.1
+
+# Protenix filter thresholds.
+plddt_cutoff: 80.0
+interface_pae_cutoff: 10.0    # mean off-diagonal PAE on the protein↔DNA block, Å
+iptm_warn_threshold: 0.60
+
+# FoldX filter thresholds (spec: positive ΔΔG → discard).
+ddg_cutoff: 0.0
+foldx_runs_per_mutant: 3
+
+# Final ranking.
+top_n: 100

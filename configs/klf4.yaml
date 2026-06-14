@@ -1,0 +1,41 @@
+# KLF4 partial-diffusion design config.
+#
+# Template: PDB 6VTX (Sharma et al. 2021) — human KLF4 zinc finger DNA
+# binding domain (residues 430-513, chain A) in complex with NANOG promoter
+# dsDNA (chains B, C). The three C-terminal C2H2 zinc fingers (ZF1-3)
+# constitute the entire resolved protein; they are locked.
+#
+# NOTE: The README previously referenced 7CY2 which is an unrelated
+# bacterial ABC1 protein, NOT KLF4. 6VTX is the correct template.
+#
+# PDB residue numbering: 430-512 maps to UniProt O43474 residues ~396-478.
+# Full-length KLF4 = ~479 aa; the 6VTX structure resolves only the ZF domain.
+
+name: klf4
+
+template_pdb: templates/6VTX.pdb
+protein_chain: A
+protein_length: 512           # max residue in 6VTX; the ZF domain is the full resolved protein
+
+motif:
+  chain: A
+  ranges:
+    - [430, 512]              # ZF1-ZF3 as resolved in 6VTX
+
+# NANOG promoter DNA from the 6VTX structure (Sharma et al., Nat Commun 2021).
+dna_target: "AGGGGGTGTGCC"
+
+partial_T: 40
+num_backbones: 10000
+
+mpnn_seqs_per_backbone: 50
+mpnn_temp: 0.1
+
+plddt_cutoff: 80.0
+interface_pae_cutoff: 10.0
+iptm_warn_threshold: 0.60
+
+ddg_cutoff: 0.0
+foldx_runs_per_mutant: 3
+
+top_n: 100
