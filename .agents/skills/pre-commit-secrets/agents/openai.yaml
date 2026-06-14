@@ -1,0 +1,6 @@
+interface:
+  display_name: "Pre-commit Secrets"
+  short_description: "Run the repository secret scan before commits"
+  default_prompt: >-
+    Run the repository secret scan immediately before committing and abort the
+    commit if it fails.
